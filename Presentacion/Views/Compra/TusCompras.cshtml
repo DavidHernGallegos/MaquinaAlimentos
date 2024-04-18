@@ -1,0 +1,49 @@
+﻿@model BL.Compra
+@{
+    ViewData["Title"] = "TusCompras";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/css/Compras.css" />
+
+
+
+@if(Model == null){
+
+    <div class="alert alert-warning" role="alert">
+        No tienes compras registradas
+    </div>
+
+
+}else{
+
+
+    <div class="card pt-4">
+        <div class="row">
+            <div class="col cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col"><h4><b>Tus historial de compras</b></h4></div>
+                        <div class="col align-self-center text-right text-muted">Cantidad de productos @ViewBag.CantidadCompras</div>
+                    </div>
+                </div>
+                @foreach(BL.Compra compra in Model.Compras)
+                {
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col"><img class="img-fluid" src=@compra.Alimento.Imagen></div>
+                        <div class="col">
+                            <div class="row text-muted">@compra.Alimento.Nombre</div>
+                            <div class="row">@compra.Alimento.Descripcion</div>
+                        </div>
+                        
+                        <div class="col">$@compra.Total </div>
+                    </div>
+                </div>
+                }
+                <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+            </div>
+            
+        </div>
+
+    </div>
+}

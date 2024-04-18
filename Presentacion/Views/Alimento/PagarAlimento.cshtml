@@ -1,0 +1,150 @@
+﻿
+@model BL.Alimento
+@{
+    ViewData["Title"] = "PagarAlimento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    @using (Html.BeginForm("ProcesarPago", "Alimento", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col">
+                @Html.Label("Total a pagar")
+                @Html.TextBoxFor(Model => Model.Precio, new { @readonly = "readonly" })
+                @Html.HiddenFor(Model => Model.IdAlimento)
+                <input type="hidden" id="Cantidad10" name="Cantidad10" value="" />
+                <input type="hidden" id="Cantidad50" name="Cantidad50" value="" />
+                <input type="hidden" id="Cantidad100" name="Cantidad100" value="" />
+
+            </div>
+            <div class="col">
+                @Html.Label("Monedas Insertadas")
+                    <input type="text" value="" name="Insertadas" , id="InputInsertar" />
+                    <label id="advertencia" style="display: none; color: red;">¡Has alcanzado o superado el precio!</label>
+            </div>
+            <div class="col">
+                    <input type="submit" value="Pagar" class="btn btn-success" style="visibility:hidden" id="boton" />
+            </div>
+        </div>
+    }
+
+    <div class="row pt-3">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@Model.Imagen" alt="Card image cap" width="30">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Nombre</h5>
+                    <p class="card-text">@Model.Descripcion.</p>
+                    <p class="text-danger"><strong>$@Model.Precio </strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-primary boton" onclick="agregarValorAlInput('10')" id="boton10">
+                  <img src="https://www.pngkey.com/png/full/369-3691399_1999mexico10-diez-nuevos-pesos-estados-unidos-mexicanosa-10.png" alt="Imagen del botón" width="100" height="100">
+                </button>
+                <label id="label10"> </label>
+               
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-danger boton" onclick="agregarValorAlInput('50') " id="boton50">
+                <img src="https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/SSQ5xefOlnn6kVqqnTAlS0csc6E=/930x0/smart/filters:no_upscale()/cloudfront-us-east-1.images.arcpublishing.com/dmn/LF5TD4YCAFBULBQTPY22H22Y5A.png" alt="Imagen del botón" width="200" height="100">
+            </button>
+            <label id="label50"> </label>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-success boton" onclick="agregarValorAlInput('100')" id="boton100">
+                <img src="https://www.shutterstock.com/image-photo/nezahualcoyotl-scholar-warrior-architect-poet-600nw-2037365948.jpg" alt="Imagen del botón" width="200" height="100">
+            </button>
+            <label id="label100"> </label>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" > </script>
+<script>
+    function AgregarBillete(){
+        $(Insertadas)
+    }
+
+    var contador = 0; 
+
+    function agregarValorAlInput(valor) {
+
+        var precio = @Model.Precio;
+        if (contador >= precio) {
+            return; 
+        }
+
+        var numero = parseInt(valor);
+        contador+= numero;
+        $('#InputInsertar').val(contador);
+        VerificarCantidad();
+        ContarBillete();
+       
+    }
+
+
+    function VerificarCantidad(){
+        var precio = @Model.Precio;
+        var cantidadIngresada = $('#InputInsertar').val();
+
+        var cantidadIngresadaInt = parseInt(cantidadIngresada);
+
+        if(cantidadIngresadaInt >= precio){
+           
+            $('#boton').css("visibility", "visible");
+
+            $('#InputInsertar').prop('readonly', true);
+
+            $('#advertencia').css("display", "block");
+
+            $(".boton").prop('disabled', true)
+        }
+
+    }
+
+    function ContarBillete() {
+        $('#boton10').on('click', 'button', function () {
+            let i = +$('#label10').text();
+            if (i < 20) {
+                $(this).text(++i);
+            }
+        });
+    }
+
+    var contadorBoton10 = 0;
+
+    $(document).ready(function () {
+        $('#boton10').click(function () {
+            contadorBoton10++;
+            $('#label10').text(contadorBoton10);
+            $('#Cantidad10').val(contadorBoton10);
+        });
+    });
+
+    var contadorBoton50 = 0;
+    $(document).ready(function () {
+        $('#boton50').click(function () {
+            contadorBoton50++;
+            $('#label50').text(contadorBoton50);
+            $('#Cantidad50').val(contadorBoton50);
+        });
+    });
+
+    var contadorBoton100 = 0;
+    $(document).ready(function () {
+        $('#boton100').click(function () {
+            contadorBoton100++;
+            $('#label100').text(contadorBoton100);
+            $('#Cantidad100').val(contadorBoton100);
+        });
+    });
+    
+
+  
+</script>

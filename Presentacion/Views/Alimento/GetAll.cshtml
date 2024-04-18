@@ -1,0 +1,55 @@
+﻿@model BL.Alimento 
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/css/Alimento.css" />
+
+@if (ViewBag.Respuesta)
+{
+
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close close" data-dismiss="alert"></button>
+        <strong>Success!</strong> Se ha realizado la compra.
+    </div>
+}
+else
+{
+    
+}
+
+
+<h1>Alimentos</h1>
+
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+
+    @foreach (BL.Alimento alimento in Model.Alimentos)
+    {
+           
+        <div class="col">
+            <div class="card">
+                <img src="@alimento.Imagen" alt="Denim Jeans">
+                <h1>@alimento.Nombre</h1>
+                <p class="price">$@alimento.Precio</p>
+                <p>@alimento.Descripcion</p>
+                <p><a href="@Url.Action("PagarAlimento","Alimento", new{IdAlimento = alimento.IdAlimento})" class="btn btn-info">Pagar</a></p>
+            </div>
+        </div>
+    }
+
+    </div>
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+

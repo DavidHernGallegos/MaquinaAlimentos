@@ -1,0 +1,69 @@
+﻿@model BL.Moneda
+@{
+    ViewData["Title"] = "DevolverCambio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/css/DevolverCambio.css" />
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+@if (ViewBag.Respuesta = true)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      
+        <strong>Success!</strong> Se ha realizado la compra.
+    </div>
+}
+else
+{
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    
+        <strong>Success!</strong> Indicates a successful or positive action.
+    </div>
+}
+
+
+
+
+
+<h1>Devolver Cambio</h1>
+
+<h5>@ViewBag.Mensaje</h5>
+<div class="container-fluid pt-4">
+  @*  <div id="contenedor">*@
+      
+        <div class="row">
+            
+        @foreach (BL.Moneda moneda in Model.Monedas)
+        {
+            <div class="col ">
+            @if(moneda.Denominacion == 100)
+            {
+                    <img src="https://i0.wp.com/www.pequenocerdocapitalista.com/wp-content/uploads/2017/03/especimen.png" width="400">
+                    
+                    <p>Cantidad: @moneda.Cantidad</p>
+                
+            }
+            else if(moneda.Denominacion == 50)
+            {
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7RCYqk6kNmuJw0yoqKI47XOEJL2pMW8OWvUObvOt0jw&s" width="400">
+                    <p>Cantidad: @moneda.Cantidad</p>
+
+            }
+            else{
+                    <img src="https://www.pngitem.com/pimgs/m/385-3854976_moneda-de-10-pesos-png-png-download-10.png" width="200">
+                    <p>Cantidad: @moneda.Cantidad</p>
+            }
+
+            </div>
+           
+        }
+            
+        </div>
+
+   @* </div>*@
+</div>
