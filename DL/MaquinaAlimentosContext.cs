@@ -25,7 +25,7 @@ public partial class MaquinaAlimentosContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.; Database= MaquinaAlimentos;Trusted_Connection=True; User ID=sa; Password=pass@word1;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=.; Database=MaquinaAlimentos;Trusted_Connection=True; User ID=sa; Password=pass@word1;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,12 +49,15 @@ public partial class MaquinaAlimentosContext : DbContext
         {
             entity.HasKey(e => e.IdCompra).HasName("PK__Compras__0A5CDB5C02DF2B0D");
 
-            entity.Property(e => e.Cambio).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Total).HasColumnType("decimal(18, 0)");
 
             entity.HasOne(d => d.IdAlimentoNavigation).WithMany(p => p.Compras)
                 .HasForeignKey(d => d.IdAlimento)
                 .HasConstraintName("FK__Compras__IdAlime__173876EA");
+
+            entity.HasOne(d => d.IdMonedaNavigation).WithMany(p => p.Compras)
+                .HasForeignKey(d => d.IdMoneda)
+                .HasConstraintName("FK__Compras__IdMoned__21B6055D");
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Compras)
                 .HasForeignKey(d => d.IdUsuario)

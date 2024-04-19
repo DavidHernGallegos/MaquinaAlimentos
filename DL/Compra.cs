@@ -13,9 +13,11 @@ public partial class Compra
 
     public decimal? Total { get; set; }
 
-    public decimal? Cambio { get; set; }
+    public int? IdMoneda { get; set; }
 
     public virtual Alimento? IdAlimentoNavigation { get; set; }
+
+    public virtual Monedum? IdMonedaNavigation { get; set; }
 
     public virtual Usuario? IdUsuarioNavigation { get; set; }
 }
